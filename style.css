@@ -1,0 +1,149 @@
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+/* Bagian menu navigasi */
+.menu {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+}
+
+.menu h1 {
+    margin: 0;
+}
+
+.menu ul {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.menu ul li {
+    display: inline;
+    margin-right: 10px;
+}
+
+.menu a {
+    text-decoration: none;
+    color: #fff;
+}
+
+/* Bagian konten utama */
+.content {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    /* Menengahkan konten secara horizontal */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.content h2 {
+    color: #333;
+}
+
+.content h3 {
+    color: #007BFF;
+}
+
+.content p {
+    line-height: 1.6;
+    color: #666;
+}
+
+.content b {
+    color: #333;
+}
+
+.content ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.content ul li {
+    margin-bottom: 10px;
+}
+
+.content form {
+    margin-top: 20px;
+}
+
+.content label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+.content input, select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+}
+
+.content input[type="submit"] {
+    display: inline-block;
+    background-color: green;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.content input[type="button"] {
+    display: inline-block;
+    background-color: red;
+    color: #fff;
+    cursor: pointer;
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.content input:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+
+.content table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.content th, td {
+    padding: 10px;
+    border: 1px solid #ddd;
+    text-align: left;
+}
+
+.content th {
+    background-color: #333;
+    color: #fff;
+}
+
+.content tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* End of styles.css */
