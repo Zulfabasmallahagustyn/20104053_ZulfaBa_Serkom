@@ -15,7 +15,8 @@
      // Sertakan file konfigurasi
     require_once "config.php";
     // Asumsikan IPK
-    define("IPK", 2.9);
+    $random_ipk = number_format(rand(250, 400) / 100, 1);
+    define("IPK", $random_ipk)
     ?>
 
     <!-- Bagian menu navigasi -->
@@ -47,7 +48,7 @@
             <input type="email" name="email" required>
             <!-- Input Nomor HP wajib diisi -->
             <label for="no_hp">Nomor HP:</label>
-            <input type="tel" name="no_hp" pattern="[0-9]+" required>
+            <input type="number" name="no_hp" required>
             <!-- Pilihan Semester Saat Ini wajib dipilih -->
             <label for="semester">Semester Saat Ini:</label>
             <select name="semester" required>
@@ -60,18 +61,18 @@
             </select>
             <!-- Input IPK (otomatis terisi) -->
             <label for="ipk">IPK Terakhir:</label>
-            <input type="text" name="ipk" readonly>
+            <input type="text" name="ipk" value="<?= $random_ipk; ?>" readonly>
             <!-- Pilihan Jenis Beasiswa wajib dipilih dinonaktifkan jika IPK kurang dari 3 -->
             <label for="beasiswa">Pilihan Beasiswa:</label>
-            <select name="beasiswa" required <?php echo (IPK < 3) ? 'disabled' : ''; ?>>
+            <select name="beasiswa" required <?= ($random_ipk < 3) ? 'disabled' : ''; ?>>
                 <option value="Akademik">Beasiswa Akademik</option>
                 <option value="Non-Akademik">Beasiswa Non-Akademik</option>
             </select>
             <!-- Upload Berkas wajib diupload dinonaktifkan jika IPK kurang dari 3 -->
             <label for="berkas">Upload Berkas:</label>
-            <input type="file" name="berkas" required <?php echo (IPK < 3) ? 'disabled' : ''; ?>>
+            <input type="file" name="berkas" required <?= ($random_ipk < 3) ? 'disabled' : ''; ?>>
             <!-- Tombol Submit dinonaktifkan jika IPK kurang dari 3 -->
-            <input type="submit" value="Daftar" <?php echo (IPK < 3) ? 'disabled' : ''; ?>>
+            <input type="submit" value="Daftar" <?= ($random_ipk < 3) ? 'disabled' : ''; ?>>
             <!-- Tombol Batal -->
             <input type="button" value="Batal" onclick="window.location.href='index.php';">
         </form>
