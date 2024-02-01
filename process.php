@@ -9,12 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $email = $_POST["email"];
     $no_hp = $_POST["no_hp"];
     $semester = $_POST["semester"];
-
-    // Atur nilai default ipk
-    $ipk = ($_POST["ipk"]) ? $_POST["ipk"] : "3.4";
-    
-    // Periksa apakah opsi beasiswa telah dipilih, jika tidak, atur nilai default
-    $beasiswa = ($_POST["beasiswa"]) ? $_POST["beasiswa"] : "Belum dipilih";
+    $beasiswa = $_POST["beasiswa"];
+    $ipk = $_POST["ipk"];
     
     // Setel status ajuan ke "Belum diverifikasi"
     $status_ajuan = "Belum diverifikasi";
