@@ -8,15 +8,15 @@
     <!-- Sisipkan file CSS untuk mengatur tata letak dan gaya halaman -->
     <link rel="stylesheet" href="style.css">
     <!-- Judul halaman web -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <title>Form Daftar Beasiswa</title>
 </head>
 <body>
     <?php
      // Sertakan file konfigurasi
     require_once "config.php";
-    // Asumsikan IPK
-    $random_ipk = number_format(rand(250, 400) / 100, 1);
-    define("IPK", $random_ipk)
+    // Dapatkan IPK
+    if (isset($_POST['ipk'])) { $ipk = $_POST['ipk']; } else { $ipk = ''; };
     ?>
 
     <!-- Bagian menu navigasi -->
@@ -33,7 +33,7 @@
             <li><a href="view.php">View Hasil Beasiswa</a></li>
         </ul>
     </div>
-    
+
     <!-- Bagian konten utama-->
     <div class="content">
         <!-- Judul halaman daftar beasiswa -->
@@ -42,7 +42,7 @@
         <form action="process.php" method="post" enctype="multipart/form-data">
             <!-- Input Nama wajib diisi -->
             <label for="nama">Nama:</label>
-            <input type="text" name="nama" required>
+            <input id="nama" type="text" name="nama" required>
             <!-- Input Email wajib diisi -->
             <label for="email">Email:</label>
             <input type="email" name="email" required>
@@ -59,22 +59,68 @@
                 }
                 ?>
             </select>
-            <!-- Input IPK (otomatis terisi) -->
+            <!-- Input IPK -->
             <label for="ipk">IPK Terakhir:</label>
-            <input type="text" name="ipk" value="<?= $random_ipk; ?>" readonly>
+            <input type="number" name="ipk" id="ipk" value="<?= $ipk; ?>" readonly required>
             <!-- Pilihan Jenis Beasiswa wajib dipilih dinonaktifkan jika IPK kurang dari 3 -->
             <label for="beasiswa">Pilihan Beasiswa:</label>
-            <select name="beasiswa" required <?= ($random_ipk < 3) ? 'disabled' : ''; ?>>
+            <select name="beasiswa" id="beasiswa" required disabled>
                 <option value="Akademik">Beasiswa Akademik</option>
                 <option value="Non-Akademik">Beasiswa Non-Akademik</option>
             </select>
             <!-- Upload Berkas wajib diupload dinonaktifkan jika IPK kurang dari 3 -->
             <label for="berkas">Upload Berkas:</label>
-            <input type="file" name="berkas" required <?= ($random_ipk < 3) ? 'disabled' : ''; ?>>
+            <input type="file" name="berkas" id="berkas" required disabled>
             <!-- Tombol Submit dinonaktifkan jika IPK kurang dari 3 -->
-            <input type="submit" value="Daftar" <?= ($random_ipk < 3) ? 'disabled' : ''; ?>>
+            <input type="submit" value="Daftar" id="submit" disabled>
             <!-- Tombol Batal -->
             <input type="button" value="Batal" onclick="window.location.href='index.php';">
+
+            <script>
+            // Script dijalankan saat halaman sudah siap ditampilkan.
+            $(document).ready(function() {
+                // Run this function every time the IPK value changes
+                    $('#ipk').change(function() {
+                        // Get the IPK value from the input field
+                        var ipk = $(this).val();
+                    
+                        if (ipk > 3) {
+                            // Move the focus to the "Jenis Beasiswa" field
+                            $('#beasiswa').focus();
+                        }
+                    });
+                // Menangani input dari user pada elemen dengan id 'nama' ketika terjadi event 'input'
+                $('#nama').on('input', function() {
+
+                    // Mengambil nilai input dari elemen dengan id 'nama' yang diinputkan oleh user.
+                    var nama = $(this).val();
+
+                    // Melakukan ajax request ke server menggunakan fungsi ajax() dengan mengirim data berupa nama yang diinputkan oleh user pada form pendaftaran.
+                    $.ajax({
+                        url: 'get_ipk.php',
+                        type: 'post',
+                        data: {
+                            nama: nama
+                        },
+
+
+                        // Ketika ajax request sukses, script akan mengambil nilai ipk yang diterima dari server dan memasukkan nilai tersebut ke dalam elemen dengan id 'ipk'. Jika nilai ipk kurang dari 3, maka tombol 'beasiswa', 'berkas', dan 'daftar' akan dinonaktifkan dengan menggunakan fungsi prop(). Jika nilai ipk lebih atau sama dengan 3, maka tombol-tombol tersebut akan diaktifkan kembali.
+                        success: function(response) {
+                            $('#ipk').val(response);
+                            if (response < 3) {
+                                $('#beasiswa').prop('disabled', true);
+                                $('#berkas').prop('disabled', true);
+                                $('#submit').prop('disabled', true);
+                            } else {
+                                $('#beasiswa').prop('disabled', false);
+                                $('#berkas').prop('disabled', false);
+                                $('#submit').prop('disabled', false);
+                            }
+                        }
+                    });
+                });
+            });
+        </script>
         </form>
     </div>
 </body>
